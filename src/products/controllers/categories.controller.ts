@@ -22,25 +22,25 @@ export class CategoriesController {
   }
 
   @Get(':id')
-  get(@Param('id', ParseIntPipe) id: number) {
+  get(@Param('id', ParseIntPipe) id: string) {
     return this.categoriesService.findOne(id);
   }
 
-  @Post()
-  create(@Body() payload: CreateCategoryDto) {
-    return this.categoriesService.create(payload);
-  }
-
-  @Put(':id')
-  update(
-    @Param('id', ParseIntPipe) id: number,
-    @Body() payload: UpdateCategoryDto,
-  ) {
-    return this.categoriesService.update(id, payload);
-  }
-
-  @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: number) {
-    return this.categoriesService.remove(+id);
-  }
+  // @Post()
+  // create(@Body() payload: CreateCategoryDto) {
+  //   return this.categoriesService.create(payload);
+  // }
+  //
+  // @Put(':id')
+  // update(
+  //   @Param('id', ParseIntPipe) id: number,
+  //   @Body() payload: UpdateCategoryDto,
+  // ) {
+  //   return this.categoriesService.update(id, payload);
+  // }
+  //
+  // @Delete(':id')
+  // remove(@Param('id', ParseIntPipe) id: number) {
+  //   return this.categoriesService.remove(+id);
+  // }
 }
