@@ -23,32 +23,22 @@ export class CustomersService {
     return customer;
   }
 
-  // create(data: CreateCustomerDto) {
-  //   this.counterId = this.counterId + 1;
-  //   const newCustomer = {
-  //     id: this.counterId,
-  //     ...data,
-  //   };
-  //   this.customers.push(newCustomer);
-  //   return newCustomer;
-  // }
-  //
-  // update(id: number, changes: UpdateCustomerDto) {
-  //   const customer = this.findOne(id);
-  //   const index = this.customers.findIndex((item) => item.id === id);
-  //   this.customers[index] = {
-  //     ...customer,
-  //     ...changes,
-  //   };
-  //   return this.customers[index];
-  // }
-  //
-  // remove(id: number) {
-  //   const index = this.customers.findIndex((item) => item.id === id);
-  //   if (index === -1) {
-  //     throw new NotFoundException(`Customer #${id} not found`);
-  //   }
-  //   this.customers.splice(index, 1);
-  //   return true;
-  // }
+  create(data: CreateCustomerDto) {
+    const newCustomer = new this.customerModel(data);
+    return newCustomer.save();
+  }
+
+  async update(id: string, changes: UpdateCustomerDto) {
+    const customer = await this.customerModel
+      .findByIdAndUpdate(id, { $set: changes }, { new: true })
+      .exec();
+    if (!customer) {
+      throw new NotFoundException(`Customer #${id} not found`);
+    }
+    return customer;
+  }
+
+  async remove(id: string) {
+    return this.customerModel.findByIdAndRemove(id).exec();
+  }
 }
