@@ -24,11 +24,12 @@ export class ProductsService {
       }
       return this.productModel
         .find()
+        .populate('brand')
         .skip(offset ? offset * limit : 0)
         .limit(limit)
         .exec();
     }
-    return this.productModel.find().exec();
+    return this.productModel.find().populate('brand').exec();
   }
 
   async findOne(id: string) {
