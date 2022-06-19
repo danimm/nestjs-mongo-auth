@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+import { ExcludeProperty } from 'nestjs-mongoose-exclude';
 
 @Schema()
 export class User extends Document {
@@ -7,6 +8,7 @@ export class User extends Document {
   email: string;
 
   @Prop({ required: true })
+  @ExcludeProperty()
   password: string;
 
   @Prop({ required: true, default: 'user' })
