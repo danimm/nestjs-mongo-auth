@@ -30,7 +30,10 @@ export class UsersService {
   }
 
   async findByEmail(email: string) {
-    return await this.userModel.findOne({ email }).exec();
+    const user = await this.userModel.findOne({ email }).exec();
+    if (!user) return null;
+    const { password, ...userData } = user.toJSON();
+    return { password, user: userData };
   }
 
   async create(data: CreateUserDto) {

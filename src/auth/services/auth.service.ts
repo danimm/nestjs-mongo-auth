@@ -8,17 +8,15 @@ export class AuthService {
 
   /**
    * Validate a user using email and password
-   * @param email
-   * @param password
+   * @param loginEmail
+   * @param loginPassword
    */
-  async validateUser(email: string, password: string) {
-    const user = await this.usersService.findByEmail(email);
-    if (user) {
-      const matchedPassword = await bycrypt.compare(password, user.password);
-      if (matchedPassword) {
-        const { password, ...rta } = user.toJSON();
-        return rta;
-      }
+  async validateUser(loginEmail: string, loginPassword: string) {
+    const userFound = await this.usersService.findByEmail(loginEmail);
+    if (userFound) {
+      const { password, user } = userFound;
+      const matchedPassword = await bycrypt.compare(loginPassword, password);
+      if (matchedPassword) return user;
     }
     return null;
   }
