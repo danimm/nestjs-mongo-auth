@@ -9,13 +9,10 @@ import {
   Delete,
   HttpStatus,
   HttpCode,
-  Res,
-  // ParseIntPipe,
+  UseGuards,
 } from '@nestjs/common';
-import { Response } from 'express';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 
-import { ParseIntPipe } from '../../common/parse-int.pipe';
 import {
   CreateProductDto,
   FilterProductsDto,
@@ -23,7 +20,9 @@ import {
 } from '../dtos/products.dtos';
 import { ProductsService } from '../services/products.service';
 import { MongoIdPipe } from '../../common/mongo-id.pipe';
+import { AuthGuard } from '@nestjs/passport';
 
+@UseGuards(AuthGuard('jwt'))
 @ApiTags('products')
 @Controller('products')
 export class ProductsController {
